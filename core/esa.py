@@ -15,7 +15,7 @@ AV_list = {
     "ESET": ["epfw", "epfwlwf", "epfwwfp"],
     "FireEye Endpoint Agent": ["xagt"],
     "F-Secure": ["fsdevcon", "FSORSPClient"],
-    "MacAfee": ["enterceptagent", "McAfeeEngineService", "McAfeeFramework"],
+    "MacAfee": ["enterceptagent", "McAfeeEngineService", "McAfeeFramework", "McCSPServiceHost", "MfeAVSvc"],
     "SentinelOne": ["SentinelAgent", "SentinelOne"],
     "Sophos": ["sophosssp", "sophossps"],
     "TrendMicro": ["tmntsrv"],
@@ -29,7 +29,9 @@ AV_list = {
 }
 SIEM = {
 
-    "winlogbeat":"winlogbeat"
+    "winlogbeat":"winlogbeat",
+    "splunk":"splunkd",
+    "splunk":"splunk"
 }
 
 
@@ -51,7 +53,8 @@ def esa(processes, session):
 
     # check for sysmon
     for process in processes:
-        if process == "Sysmon64":
+        # I will commit this to fix a bug wrote on 7:27 AM after 10 hours of coding :D
+        if process == "Sysmon64" or process == "Sysmon":
             sysmon = True
 
     hostname = session[2]
